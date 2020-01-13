@@ -1,0 +1,24 @@
+package main
+
+import (
+	"github.com/anihome/data/databaza/handler"
+	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
+)
+
+var e *echo.Echo
+var err *error
+
+func main() {
+
+	e := echo.New()
+	e.Use(middleware.Logger())
+	e.Use(middleware.Recover())
+
+	e.Logger.Fatal(e.Start("localhost:8283"))
+
+	h := handler.New()
+
+	e.GET("/users/:id", h.GetUser)
+
+}
